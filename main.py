@@ -7,7 +7,10 @@ from google.genai import types
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Fraude - Claude from Wish")
+    parser = argparse.ArgumentParser(
+        description="Fraude - Claude from Wish",
+        epilog="Example: python main.py 'How do I build a calcultor app?'",
+    )
     parser.add_argument("prompt")
     parser.add_argument("--verbose", action="store_true", help="Show debug info")
 
@@ -45,17 +48,13 @@ def log_debug(args, response):
         print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
 
 
-def print_response(response):
-    print("Response:")
-    print(response.text)
-
-
 def main():
     args = parse_args()
     client = create_client()
     response = get_response(client, args)
     log_debug(args, response)
-    print_response(response)
+    print("Response:")
+    print(response.text)
 
 
 if __name__ == "__main__":
