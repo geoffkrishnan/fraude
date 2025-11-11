@@ -1,12 +1,26 @@
 import os
 
+
 def get_files_info(working_directory, directory="."):
-    absolute_path = os.path.join(working_directory, directory)
-    if not absolute_path.startswith(''
-    return f'Error: Cannot list {directory} as it outside the permitted working directory') 
-    if type(directory) == str:
-        return f'Error: "{directory}" is not a directory'
-    
+    full_path = os.path.join(working_directory, directory)
+    resolved_path = os.path.realpath(full_path)
+    resolved_working_directory = os.path.realpath(working_directory)
 
+    if not resolved_path.startswith(resolved_working_directory):
+        return f'\tError: Cannot list "{directory}" as it is outside the permitted working directory'
 
+    if not os.path.isdir(resolved_path):
+        return f'\tError: "{directory}" is not a directory'
 
+    try:
+        dir_list = []
+        for item in os.listdir(resolved_path):
+            if item.startswith(".") or item == "__pycache__":
+                continue
+            item_path = os.path.join(resolved_path, item)
+            dir_list.append(
+                f" - {item}: file_size={os.path.getsize(item_path)} bytes, is_dir={os.path.isdir(item_path)}"
+            )
+        return "\n".join(dir_list)
+    except Exception as e:
+        return f"Error listing files: {e}"
