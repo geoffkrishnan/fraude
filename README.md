@@ -3,4 +3,4 @@ This is a toy version of an actual agentic LLM like Claude Code or OpenAI's Code
 
 Even those tools aren't perfectly secure built by teams of the most brilliant engineers.
 
-This is a toy project created by a single CS freshman.
+This is a toy project created by a single CS freshman to get a basic understanding of how to work with Gemini API.
